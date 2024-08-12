@@ -3,7 +3,8 @@
   "version": "22.4.1",
   "main": "module1-task1.js",
   "scripts": {
-    "start": "node module1-task1.js",
+    "task1": "node module1-task1.js",
+    "task2": "node module1-task2.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Semeriak",
