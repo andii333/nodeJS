@@ -1,0 +1,18 @@
+{
+  "name": "nodejs",
+  "version": "22.4.1",
+  "main": "module1-task1.js",
+  "scripts": {
+    "array": "node generateArray.mjs",
+    "memory": "node implementMemoryMeasurement.mjs",
+    "asynchronously": "node ImplementFunctionAsynchronously.mjs",
+    "sequentially": "node processArraySequentiallyWithFor.mjs",
+    "calls": "node processArraySequentiallyWithRecursion.mjs",
+    "batches": "node processArrayInBatches.mjs",
+    "memory check": "node monitorMemoryCheck.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Semeriak",
+  "license": "ISC",
+  "description": "module1"
+}

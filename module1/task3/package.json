@@ -1,0 +1,20 @@
+{
+  "name": "nodejs",
+  "version": "22.4.1",
+  "main": "module1-task1.js",
+  "scripts": {
+    "task1": "node module1-task1.js",
+    "task2": "node module1-task2.js",
+    "task3": "node module1-task3.js",
+    "task4": "node module1-task4.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Semeriak",
+  "license": "ISC",
+  "description": "module1",
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "casual": "^1.6.2",
+    "faker": "^6.6.6"
+  }
+}
