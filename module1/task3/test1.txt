@@ -1,0 +1,5 @@
+Completion of task 3 of module 1:
+Write a script that reads a directory recursively and finds all files with a specific extension (e.g., .txt). For each file found, the script should print the file name, its size in bytes, and the number of lines it contains. The output should be sorted in descending order by file size.
+
+Acceptance criteria:
+To display result you need to enter command in the terminal: " npm run task3 "

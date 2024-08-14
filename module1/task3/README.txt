@@ -1,0 +1,16 @@
+Completion of task 3 of module 1:
+Write a script that reads a directory recursively and finds all files with a specific extension (e.g., .txt). For each file found, the script should print the file name, its size in bytes, and the number of lines it contains. The output should be sorted in descending order by file size.
+
+Acceptance criteria:
+
+- The script should accept two command-line arguments: the path to the directory to search in, and the file extension to look for.
+
+- The script should handle errors gracefully, for example by printing an error message if the directory cannot be read or if a file cannot be opened.
+
+- The script should use asynchronous functions from the File System module to read the files and should not block the main thread while doing so.
+
+- The script should be modular and use functions to separate concerns and improve code readability.
+
+To display result you need to enter command in the terminal: " npm run task3 ".
+You can additionally test this functionality by changing the run() function in the 'module1-task3.mjs' file
+where the first parameter is the location of the search directory relative to 'task3' folder and the second parameter is the file extension
