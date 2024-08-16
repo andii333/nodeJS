@@ -5,6 +5,7 @@ import { createHash } from "crypto";
 export function hashStringAsync(str) {
   return new Promise((resolve, reject) => {
     const hash = createHash("sha256");
+    import { monitorMemory } from "./implementMemoryMeasurement.mjs";
     hash.update(str);
     resolve(hash.digest("hex"));
   });
@@ -12,6 +13,7 @@ export function hashStringAsync(str) {
 function run() {
   array.forEach(element => {
     console.log(hashStringAsync(element.toString()));
-});
+  });
 }
+monitorMemory();
 run();
