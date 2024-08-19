@@ -3,26 +3,34 @@ import {array} from './generateArray.mjs';
 import { monitorMemory } from "./implementMemoryMeasurement.mjs";
 const batchSize = 3;
 
-function processItem(item) {
-  return new Promise((resolve) => {
-    console.log(`Processing item: ${item}`);
-    resolve();
-  });
+function processArrayInBatches(array, batchSize) {
+    return new Promise((resolve) => {
+        let index = 0;
+        function processNextBatch() {
+            if (index < array.length) {
+                const batch = array.slice(index, index + batchSize);
+                console.log('Processing batch:', batch);
+                index += batchSize;
+                setImmediate(processNextBatch);
+            } else {
+                resolve();
+            }
+        }
+        processNextBatch();
+    });
 }
+async function startProcesses() {
+  console.time("Batches calculated in");
 
-async function processBatch(batch) {
-  const promises = batch.map((item) => processItem(item));
-  await Promise.all(promises);
+  console.log("Starting memory monitoring...");
+  const intervalId = monitorMemory();
+
+  console.log("Starting array batches...");
+  await processArrayInBatches(array, batchSize);
+
+  console.log("Stopping memory monitoring...");
+  clearInterval(intervalId);
+
+  console.timeEnd("Batches calculated in");
 }
-
-async function processArrayInBatches(arr, batchSize) {
-  for (let i = 0; i < arr.length; i += batchSize) {
-    const batch = arr.slice(i, i + batchSize);
-    await processBatch(batch);
-    console.log(`Batch ${i / batchSize + 1} processed`);
-  }
-  console.log("All items processed");
-}
-
-monitorMemory();
-processArrayInBatches(array, batchSize);
+startProcesses();

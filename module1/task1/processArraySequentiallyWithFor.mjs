@@ -4,15 +4,29 @@ import { monitorMemory } from "./implementMemoryMeasurement.mjs";
 function processItem(item) {
   return new Promise((resolve) => {
     console.log(`Processing item: ${item}`);
-    resolve();
+    setImmediate(() => resolve());
   });
 }
 async function processArraySequentially(arr) {
   for (let i = 0; i < arr.length; i++) {
-    await processItem(arr[i]);
+     await processItem(arr[i]);
   }
   console.log("All items processed");
 }
 
-monitorMemory();
-processArraySequentially(array);
+async function startProcesses() {
+  console.time("Processes calculated in");
+
+  console.log("Starting memory monitoring...");
+  const intervalId = monitorMemory();
+
+  console.log("Starting processes...");
+  await processArraySequentially(array);
+
+  console.log("Stopping memory monitoring...");
+  clearInterval(intervalId);
+
+  console.timeEnd("Processes calculated in");
+}
+startProcesses();
+
