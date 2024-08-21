@@ -1,9 +1,10 @@
 import { array } from "./generateArray.mjs";
 import { monitorMemory } from "./implementMemoryMeasurement.mjs";
-
-function processItem(item) {
+import { asyncHash } from "./asyncHash.mjs";
+async function processItem(item) {
+  const hash = await asyncHash(item.toString());
   return new Promise((resolve) => {
-    console.log(`Processing item: ${item}`);
+    console.log(`Processing item: ${item}, hash: ${hash}`);
     setImmediate(() => resolve());
   });
 }

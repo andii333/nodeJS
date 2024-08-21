@@ -1,15 +1,18 @@
 // - Implement npm script to process the array in batches sequentially. Choose the batch size on your own.
 import {array} from './generateArray.mjs'; 
 import { monitorMemory } from "./implementMemoryMeasurement.mjs";
+import { asyncHash } from "./asyncHash.mjs";
+
 const batchSize = 3;
 
 function processArrayInBatches(array, batchSize) {
     return new Promise((resolve) => {
         let index = 0;
-        function processNextBatch() {
+        async function processNextBatch() {
             if (index < array.length) {
                 const batch = array.slice(index, index + batchSize);
-                console.log('Processing batch:', batch);
+                const hash = await asyncHash(index.toString());
+                console.log(`Processing batch:' ${batch} 'hash:' ${hash}` );
                 index += batchSize;
                 setImmediate(processNextBatch);
             } else {

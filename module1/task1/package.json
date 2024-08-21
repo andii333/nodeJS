@@ -5,11 +5,9 @@
   "scripts": {
     "array": "node generateArray.mjs",
     "memory": "node implementMemoryMeasurement.mjs",
-    "asynchronously": "node ImplementFunctionAsynchronously.mjs",
-    "sequentially": "node processArraySequentiallyWithFor.mjs",
-    "calls": "node processArraySequentiallyWithRecursion.mjs",
-    "batches": "node processArrayInBatches.mjs",
-    "memory check": "node monitorMemoryCheck.mjs",
+    "for": "node implementFunctionFor.mjs",
+    "calls": "node implementFunctionCalls.mjs",
+    "batches": "node implementFunctionBatches.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Semeriak",
