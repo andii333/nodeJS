@@ -1,5 +1,4 @@
 import fs from "fs";
-import path from "path";
 import sharp from "sharp";
 import { createRequire } from "module";
 
@@ -13,7 +12,8 @@ const {
   logoPath,
   watermarkOpacity,
   textOpacity,
-  textColor,
+  text1Color,
+  text2Color,
   fontSizeLarge,
   fontSizeSmall,
   title,
@@ -34,17 +34,19 @@ async function processImage() {
         input: logoBuffer,
         gravity: "southeast",
         blend: "over",
+        top:210,
+        left:205,
         opacity: Number(watermarkOpacity),
       },
       {
         input: Buffer.from(
           `<svg width="${imageWidth}" height="${imageHeight}">
-                        <text x="10" y="${
-                          imageHeight - 40
-                        }" font-size="${fontSizeLarge}px" fill="${textColor}" opacity="${textOpacity}">${title}</text>
+                        <text x="20" y="${
+                          imageHeight - 25
+                        }" font-size="${fontSizeLarge}px" fill="${text1Color}" opacity="${textOpacity}">${title}</text>
                         <text x="10" y="${
                           imageHeight - 10
-                        }" font-size="${fontSizeSmall}px" fill="${textColor}" opacity="${textOpacity}">${webAddress}</text>
+                        }" font-size="${fontSizeSmall}px" fill="${text2Color}" opacity="${textOpacity}">${webAddress}</text>
                     </svg>`
         ),
         gravity: "southwest",
