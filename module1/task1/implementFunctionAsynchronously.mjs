@@ -13,7 +13,7 @@ const asyncHash = promisify((data, callback) => {
 async function hashArrayElements(array) {
   for (const element of array) {
     const hash = await asyncHash(element.toString());
-    console.log(`Hash of ${element}: ${hash}`);    // вивід у консольлог хеш-елементів
+    // console.log(`Hash of ${element}: ${hash}`);    // вивід у консольлог хеш-елементів
     await new Promise((resolve) => setImmediate(resolve));
   }
 }

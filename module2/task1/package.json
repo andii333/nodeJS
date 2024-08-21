@@ -1,0 +1,16 @@
+{
+  "name": "task1",
+  "version": "22.6.0",
+  "main": "task1",
+  "scripts": {
+    "task1": "node task1.mjs",
+    "test": "test"
+  },
+  "author": "semeriak",
+  "license": "ISC",
+  "description": "task1",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "sharp": "^0.33.5"
+  }
+}
