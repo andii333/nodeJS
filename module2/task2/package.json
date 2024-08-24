@@ -1,0 +1,17 @@
+{
+  "name": "task2",
+  "version": "22.6.0",
+  "main": "task2",
+  "scripts": {
+    "task2": "node task2.mjs"
+  },
+  "author": "semeriak",
+  "license": "ISC",
+  "description": "task2",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "sharp": "^0.33.5",
+    "socket.io": "^4.7.5"
+  }
+}
