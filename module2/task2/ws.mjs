@@ -8,8 +8,12 @@ const chat3 = document.getElementById("chat3");
 const activeChat = document.getElementById("active-chat");
 const nameInput = document.getElementById("name");
 const activeName = document.getElementById("active-name");
+const typing = document.getElementById("typing");
+const online = document.getElementById("online");
 let nickname = "";
 let chatNumber = 1;
+let arrayTyping = [];
+let arrayOnline = [];
 
 chat1.onclick = function () {
   chooseChat(1);
@@ -27,6 +31,13 @@ function chooseChat(chatId) {
   chatNumber = chatId;
 }
 
+inputMessage.addEventListener("input", function () {
+  if (inputMessage.value) {
+    socket.emit("typing", nickname);
+  } else {
+    socket.emit("stop typing", nickname);
+  }
+});
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   if (inputMessage.value && inputMessage.value.length <= 30) {
@@ -36,6 +47,7 @@ form.addEventListener("submit", function (e) {
       nickname: nickname,
       date: new Date(),
     });
+    socket.emit("stop typing", nickname);
     inputMessage.value = "";
   }
 });
@@ -49,4 +61,35 @@ socket.on("chat message", function (data) {
   );
   messages.appendChild(liTag);
   window.scrollTo(0, document.body.scrollHeight);
+});
+
+socket.on("typing", (nickname) => {
+  if (!arrayTyping.includes(nickname)) {
+    arrayTyping.push(nickname);
+    typing.textContent = "";
+    typing.append(`typing: ${arrayTyping}`);
+    typing.classList.remove("hide");
+  }
+});
+socket.on("stop typing", (nickname) => {
+  const index = arrayTyping.indexOf(nickname);
+  arrayTyping.splice(index, 1);
+  typing.textContent = "";
+  arrayTyping.length
+    ? typing.append(`typing: ${arrayTyping}`)
+    : (typing.className = "hide");
+});
+socket.on("online", (nickname) => {
+  const index = arrayOnline.indexOf(nickname);
+  arrayOnline.splice(index, 1);
+  online.textContent = "";
+  arr.length ? online.append(`online: ${arr}`) : (online.className = "hide");
+});
+socket.on("disconnect", (nickname) => {
+  const index = arrayOnline.indexOf(nickname);
+  arrayOnline.splice(index, 1);
+  online.textContent = "";
+  arrayOnline.length
+    ? online.append(`online: ${arrayOnline}`)
+    : (online.className = "hide");
 });
