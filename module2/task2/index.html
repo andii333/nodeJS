@@ -58,19 +58,42 @@
         #messages>li:nth-child(odd) {
             background: #efefef;
         }
+
+        #active-chat {
+            margin-left: 10px;
+            font-weight: 600;
+        }
+
+        #active-name {
+            font-weight: 600;
+        }
     </style>
 </head>
 
 <body>
+    <div>
+        <label for="name">Your name:</label>
+        <input type="text" id="name">
+    </div>
+    <div>
+        <span>Choose chat:</span>
+        <button class="chat-btn" type="button" id="chat1">Chat1</button>
+        <button class="chat-btn" type="button" id="chat2">Chat2</button>
+        <button class="chat-btn" type="button" id="chat3">Chat3</button>
+    </div>
+    <p>
+        active chat: <span id="active-chat">not chosen</span>
+        nickname: <span id="active-name"></span>
+    </p>
+
     <ul id="messages"></ul>
+
     <form id="form" action="">
-        <input id="input" autocomplete="off" /><button>Send</button>
+        <input id="input" autocomplete="off" /><button type="submit">Send</button>
     </form>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        var socket = io();
-    </script>
+    <script src="./ws.mjs"></script>
 </body>
 
 </html>
