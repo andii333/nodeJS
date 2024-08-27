@@ -20,6 +20,8 @@ app.get("/", (req, res) => {
 io.on("connection", (socket) => {
   socket.on("joinChannel", (data) => {
     socket.join(data.channel);
+    socket.nickname = data.nickname;
+    socket.channel = data.channel;
     if (!nicknames[data.channel]) {
       nicknames[data.channel] = [];
     }
@@ -28,12 +30,14 @@ io.on("connection", (socket) => {
     }
     io.to(data.channel).emit("online", nicknames[data.channel]);
   });
-  // socket.on("disconnect", () => {
-  //   if (Object.keys(nicknames).includes(socket.id)) {
-  //     delete nicknames[socket.id];
-  //     socket.emit("online", nicknames);
-  //   }
-  // });
+  socket.on("disconnect", () => {
+    if (nicknames[socket.channel] && nicknames[socket.channel].includes(socket.nickname)) {
+      const arr = nicknames[socket.channel];
+      arr.splice(arr.indexOf(socket.nickname),1);
+      nicknames[socket.channel] = arr;
+      io.to(socket.channel).emit("online", nicknames[socket.channel]);
+    }
+  });
   // socket.on("chat message", (msg) => {
   //   socket.to(msg.channel).broadcast.emit("chat message", msg);
   // });
