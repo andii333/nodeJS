@@ -7,9 +7,10 @@ const app = express();
 const __dirname = path.resolve();
 const server = http.createServer(app);
 const io = new Server(server);
+const nicknames = {};
 
 app.use(express.static(path.join(__dirname)));
-app.get("/chat", (req, res) => {
+app.get("/chat?", (req, res) => {
   res.sendFile(__dirname + "/chat.html");
 });
 app.get("/", (req, res) => {
@@ -18,11 +19,19 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
   socket.on("online", (nickname) => {
-    socket.broadcast.emit("online", nickname);
+    if (!Object.values(nicknames).includes(nickname)) {
+      nicknames[socket.id] = nickname;
+    }
+    socket.emit("online", nicknames);
+    console.log('nicknames', nicknames)
   });
-  // socket.on("disconnect", (nickname) => {
-  //   socket.broadcast.emit("disconnect", nickname);
-  // });
+  socket.on("disconnect", () => {
+    if (Object.keys(nicknames).includes(socket.id)) {
+      delete nicknames[socket.id];
+      socket.emit("online", nicknames);
+      console.log('nicknames', nicknames)
+    }
+  });
   socket.on("chat message", (msg) => {
     socket.broadcast.emit("chat message", msg);
   });
