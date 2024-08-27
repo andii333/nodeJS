@@ -31,4 +31,4 @@ and use it as a guide for this task
 
 - Test your results by running at least 3 independent browser instances (incognito mode, etc.) simultaneously for a different chat users to make them able to communicate each other in the chat
 
-To start server, you need to run in terminal the command "npm run task2".
+To start server, you need to run in terminal the command "npm run task2" and open "localhost:3000" in your browser.

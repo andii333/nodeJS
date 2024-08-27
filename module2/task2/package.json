@@ -3,7 +3,7 @@
   "version": "22.6.0",
   "main": "task2",
   "scripts": {
-    "task2": "node task2.mjs"
+    "task2": "node server.mjs"
   },
   "author": "semeriak",
   "license": "ISC",
