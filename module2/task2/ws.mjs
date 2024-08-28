@@ -20,6 +20,31 @@ form.addEventListener("submit", function (e) {
     inputMessage.value = "";
   }
 });
+inputMessage.addEventListener("input", function () {
+  if (inputMessage.value) {
+    socket.emit("typing", { nickname, channel });
+  } else {
+    socket.emit("stop typing", { nickname, channel });
+  }
+});
+function showNewData(tag, nicknames) {
+  tag.textContent = "";
+  if (nicknames.includes(nickname)) {
+    nicknames.splice(nicknames.indexOf(nickname), 1);
+  }
+  if (nicknames.length) {
+    tag.append(`typing: ${nicknames}`);
+    tag.classList.remove("hide");
+  } else {
+    tag.className = "hide";
+  }
+}
+socket.on("online", (nicknames) => {
+  showNewData(online, nicknames);
+});
+socket.on("typing", (nicknames) => {
+  showNewData(typing, nicknames);
+});
 socket.on("chat message", function (data) {
   if (data.nickname !== nickname) {
     const liTag = document.createElement("li");
@@ -30,38 +55,6 @@ socket.on("chat message", function (data) {
     );
     messages.appendChild(liTag);
     window.scrollTo(0, document.body.scrollHeight);
-  }
-});
-inputMessage.addEventListener("input", function () {
-  if (inputMessage.value) {
-    socket.emit("typing", { nickname, channel });
-  } else {
-    socket.emit("stop typing", { nickname, channel });
-  }
-});
-
-socket.on("typing", (nicknames) => {
-  typing.textContent = "";
-  if (nicknames.includes(nickname)) {
-    nicknames.splice(nicknames.indexOf(nickname), 1);
-  }
-  if (nicknames.length) {
-    typing.append(`typing: ${nicknames}`);
-    typing.classList.remove("hide");
-  } else {
-    typing.className = "hide";
-  }
-});
-socket.on("online", (nicknames) => {
-  online.textContent = "";
-  if (nicknames.includes(nickname)) {
-    nicknames.splice(nicknames.indexOf(nickname), 1);
-  }
-  if (nicknames.length) {
-    online.append(`online: ${nicknames}`);
-    online.classList.remove("hide");
-  } else {
-    online.className = "hide";
   }
 });
 socket.emit("joinChannel", { nickname, channel });
