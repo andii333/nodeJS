@@ -8,6 +8,7 @@ const __dirname = path.resolve();
 const server = http.createServer(app);
 const io = new Server(server);
 const nicknames = {};
+const typingDictionary = {};
 
 app.use(express.static(path.join(__dirname)));
 app.get("/chat?", (req, res) => {
@@ -17,36 +18,49 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
+function addDataToDictionary(dictionary, channel, nickname) {
+  if (!dictionary[channel]) {
+    dictionary[channel] = [];
+  }
+  if (!dictionary[channel].includes(nickname)) {
+    dictionary[channel].push(nickname);
+  }
+}
+function deleteDataToDictionary(dictionary, channel, nickname) {
+  if (
+    dictionary[channel] &&
+    dictionary[channel].includes(nickname)
+  ) {
+    const arr = dictionary[channel];
+    arr.splice(arr.indexOf(nickname), 1);
+    dictionary[channel] = arr;
+  }
+}
 io.on("connection", (socket) => {
   socket.on("joinChannel", (data) => {
-    socket.join(data.channel);
     socket.nickname = data.nickname;
     socket.channel = data.channel;
-    if (!nicknames[data.channel]) {
-      nicknames[data.channel] = [];
-    }
-    if (!nicknames[data.channel].includes(data.nickname)) {
-      nicknames[data.channel].push(data.nickname);
-    }
-    io.to(data.channel).emit("online", nicknames[data.channel]);
+    socket.join(socket.channel);
+    addDataToDictionary(nicknames, socket.channel, socket.nickname);
+    io.to(socket.channel).emit("online", nicknames[socket.channel]);
   });
   socket.on("disconnect", () => {
-    if (nicknames[socket.channel] && nicknames[socket.channel].includes(socket.nickname)) {
-      const arr = nicknames[socket.channel];
-      arr.splice(arr.indexOf(socket.nickname),1);
-      nicknames[socket.channel] = arr;
-      io.to(socket.channel).emit("online", nicknames[socket.channel]);
-    }
+    deleteDataToDictionary(nicknames, socket.channel, socket.nickname);
+    io.to(socket.channel).emit("online", nicknames[socket.channel]);
+    deleteDataToDictionary(typingDictionary, socket.channel, socket.nickname);
+    io.to(socket.channel).emit("typing", typingDictionary[socket.channel]);
   });
-  // socket.on("chat message", (msg) => {
-  //   socket.to(msg.channel).broadcast.emit("chat message", msg);
-  // });
-  // socket.on("typing", (data) => {
-  //   socket.to(data.channel).broadcast.emit("typing", data.nickname);
-  // });
-  // socket.on("stop typing", (data) => {
-  //   socket.to(data.channel).broadcast.emit("stop typing", data.nickname);
-  // });
+  socket.on("typing", (data) => {
+    addDataToDictionary(typingDictionary, data.channel, data.nickname);
+    io.to(data.channel).emit("typing", typingDictionary[data.channel]);
+  });
+  socket.on("stop typing", (data) => {
+    deleteDataToDictionary(typingDictionary, data.channel, data.nickname);
+    io.to(data.channel).emit("typing", typingDictionary[data.channel]);
+  });
+  socket.on("chat message", (msg) => {
+    io.to(msg.channel).emit("chat message", msg);
+  });
 });
 
 server.listen(3000, () => {
