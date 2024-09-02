@@ -11,6 +11,4 @@ Acceptance criteria:
 
 - The script should be modular and use functions to separate concerns and improve code readability.
 
-To display result you need to enter command in the terminal: " npm run task3 ".
-You can additionally test this functionality by changing the run() function in the 'module1-task3.mjs' file
-where the first parameter is the location of the search directory relative to 'task3' folder and the second parameter is the file extension
+To display result you need to enter command in the terminal: " npm run task3 way=(your way) type=(your type) ".

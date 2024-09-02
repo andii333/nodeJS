@@ -9,4 +9,13 @@ function run(dir, ext) {
   findFilesInDirectory(dir, ext);
 }
 
-run("./", "txt");
+
+const args = process.argv.slice(2);
+
+if (args[0].includes("way=") && args[1].includes("type=")) {
+  const way = args[0].match(/way=(.*)/);
+  const type = args[1].match(/type=(.*)/);
+  run(way[1], type[1]);
+} else {
+  console.log("Not valid argument");
+}
