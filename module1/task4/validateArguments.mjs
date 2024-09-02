@@ -1,6 +1,4 @@
-export const rowLimit = 100000;
-
-export function validateArguments(sizeLimit) {
+export function validateArguments(sizeLimit, rowLimit) {
   if (isNaN(sizeLimit) && isNaN(rowLimit)) {
     console.error(
       "Error: You must specify either a file size limit in MB or a row limit."

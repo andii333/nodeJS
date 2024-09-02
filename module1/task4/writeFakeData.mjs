@@ -4,7 +4,6 @@ import { displayMemoryUsage } from "./displayMemoryUsage.mjs";
 import { join } from "path";
 import { fileURLToPath } from "url";
 import { mbToBt } from "./displayMemoryUsage.mjs";
-import { rowLimit } from "./validateArguments.mjs";
 
 // Get the current file's directory
 let currentFileSize = 0;
@@ -13,7 +12,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = join(__filename, "..");
 const outputFile = join(__dirname, "fake-data.csv");
 
-export async function writeFakeData(sizeLimit) {
+export async function writeFakeData(sizeLimit, rowLimit) {
   const writeStream = createWriteStream(outputFile, { encoding: "utf8" });
   writeStream.write(
     "#:First Name:Last Name:Company:Address:City:Country:ZIP/Postal Code:Phone:Email:Web Link\n"

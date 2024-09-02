@@ -45,5 +45,5 @@ Task
 11. Measure the memory consuming and exit with error if it exceeds the 80MB
 
 To display result you need to enter command in the terminal: " npm run task4 ".
-You can additionally test this functionality by changing the parameter of function run() in the 'module1-task4.mjs' file
-Number of 'rowLimit' is 100000, but you can change it in file 'validateArguments.mjs' (1 row)
+You can additionally test this functionality by changing the parameter of function run(sizeLimit, rowLimit) in the 'module1-task4.mjs' file
+
