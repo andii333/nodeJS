@@ -1,6 +1,6 @@
 import { performance } from "perf_hooks";
 
-export const mbToBt = 1024 * 1024;
+export const mbToBt = 1000000;
 const memoryLimitMb = 80;
 let lastMemoryCheck = performance.now();
 function formatMemoryUsage(bytes) {
