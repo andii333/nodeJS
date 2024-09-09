@@ -1,0 +1,17 @@
+services:
+  server:
+    build:
+      context: ./server
+    restart: always
+    command: ["node", "server.js"]
+    expose:
+      - "3000"
+
+  client:
+    build:
+      context: ./client
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - server
