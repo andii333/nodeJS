@@ -5,10 +5,11 @@ const { validateOrder } = require("./validator.js");
 const app = express();
 const PORT = 3000;
 
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 
-app.post("/", validateOrder, (req, res) => {
+app.post("/", (req, res) => {
+  console.log("req", req.body);
   res
     .status(200)
     .json({ message: "Order received successfully", order: req.body });
