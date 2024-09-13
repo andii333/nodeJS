@@ -1,0 +1,19 @@
+{
+  "name": "task1",
+  "version": "1.0.0",
+  "main": "module4-task1.js",
+  "scripts": {
+    "task1": "node module4-task1.js",
+    "try": "node test1.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Semeriak",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "joi": "^17.13.3"
+  }
+}
