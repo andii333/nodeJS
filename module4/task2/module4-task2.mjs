@@ -2,10 +2,11 @@ import express from "express";
 import { generateFakeData } from "./generateFakeData.mjs";
 import { displayMemoryUsage } from "./displayMemoryUsage.mjs";
 import { Readable } from "stream";
-
+import cors from "cors";
 const app = express();
 const port = 3000;
 
+app.use(cors());
 app.use(express.json());
 
 app.post("/csv", (req, res) => {

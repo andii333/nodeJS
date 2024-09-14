@@ -11,7 +11,11 @@ Task
 5. Test using file size 2GB or higher.
 
 To start server, you need to enter command in the terminal: " npm run task2".
-To display result with your sizeLimit, you need to do request with json 
+
+To check result: open index.html file in browser (when server is running) and click button,
+after wait 8 minute and csv 2GB file will be downloaded.
+
+To display result in postman with your sizeLimit, you need to do request with json 
 {
   "limit": yourSizeLimit,
   "type": "size"
