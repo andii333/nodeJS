@@ -1,49 +1,49 @@
-Completion of task 4 of module 1:
 Task
-1. Implement script, which generates a file with fake CSV data.
 
-2. User must specify one of the limitations as script arguments during the console run: file size in MB or rows limit.
+1. Implement simple POST endpoint /login, which should accept an object with username and password fields, validate them and return a token on success or an error message.
 
-3. Implement all the necessary script arguments validations.
+2. Implement middleware, which should check header Authorization for the presence of a token and call the next handler or return an error message.
 
-4. Script must correctly finish the execution and display corresponding message if any limit has been reached.
+3. Implement any endpoint and protect it with middleware from the previous point.
 
-5. Display the memory consuming every 5sec.
+To run server text in command line: "npm run task4"
 
-6. Generated CSV file must correctly be opened in Excel.
-
-7. CSV file size must not exceed the size limit if specified.
-
-8. CSV rows count must not exceed the rows limit if specified.
-
-9. CSV file should contain the following generated fake fields (“casual” lib or similar):
-
-- A row number (#)
-
-- First Name
-
-- Last Name
-
-- Company (randomly presented)
-
-- Address
-
-- City
-
-- Country
-
-- ZIP/Postal Code
-
-- Phone
-
-- Email
-
-- Web Link (randomly presented)
-
-10. Test the script with limitation 2GB and higher.
-
-11. Measure the memory consuming and exit with error if it exceeds the 80MB
-
-To display result with your sizeLimit, you need to enter command in the terminal: " npm run task4 sizeLimit=(here your number)".
-To display result with your rowLimit, you need to enter command in the terminal: " npm run task4 rowLimit=(here your number)".
-
+Try in postman:
+1. Setup the /login Endpoint:
+a) Open Postman
+Launch Postman and create a new POST request.
+b) Set the URL for the /login endpoint:
+Copy code
+http://localhost:3000/login
+c) Add the JSON body:
+Click on the Body tab.
+Select raw and choose JSON format.
+Add the following content to the body:
+json
+Copy code
+{
+  "username": "user1",
+  "password": "password1"
+}
+d) Send the request:
+Click the Send button.
+You should receive a response with a token, such as:
+json
+Copy code
+{
+  "token": "user1-mySecretKey"
+}
+2. Test the Protected Endpoint /protected:
+a) Create a new GET request:
+Create another request in Postman, this time GET.
+b) Set the URL for the /protected endpoint:
+bash
+Copy code
+http://localhost:3000/protected
+c) Add the Authorization Header:
+Go to the Headers tab.
+Add a new header with the key Authorization and value Bearer your_token, replacing your_token with the token you received from the /login response. Example:
+makefile
+Copy code
+Authorization: Bearer user1-mySecretKey
+d) Send the request:

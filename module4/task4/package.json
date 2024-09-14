@@ -1,0 +1,16 @@
+{
+  "name": "task4",
+  "version": "1.0.0",
+  "main": "module4-task4.js",
+  "scripts": {
+    "task4": "node module4-task4.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Semeriak",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}
