@@ -1,14 +1,16 @@
-Completion of task 3 of module 1:
-Write a script that reads a directory recursively and finds all files with a specific extension (e.g., .txt). For each file found, the script should print the file name, its size in bytes, and the number of lines it contains. The output should be sorted in descending order by file size.
+Task
 
-Acceptance criteria:
+1. Implement simple Express.js POST endpoint /transform/json, which should fetch data as a stream from URL (http://.../csv) specified in environment variables. The application from the previous task should be run on this URL and serve requests.
 
-- The script should accept two command-line arguments: the path to the directory to search in, and the file extension to look for.
+2. The /transform/json endpoint should transform the loading data stream to JSON on the fly and output to the http response stream.
 
-- The script should handle errors gracefully, for example by printing an error message if the directory cannot be read or if a file cannot be opened.
+3. The endpoint should accept only the single parameter: rows limit.
 
-- The script should use asynchronous functions from the File System module to read the files and should not block the main thread while doing so.
+4. Downloaded file must contain a valid JSON and be provided with proper content type headers.
 
-- The script should be modular and use functions to separate concerns and improve code readability.
+5. Implement a POST endpoint /transform/ndjson similar to the /transform/json. It should return a valid NDJSON file (MIME-type “application/x-ndjson”).
 
-To display result you need to enter command in the terminal: " npm run task3 way=(your way) type=(your type) ".
+To display result you need:
+1.Run server of previous task - in command line text "npm run task2" in folder task2
+2.Run server of this task - in command line text "npm run task3" in folder task3
+3.Open index.html file in browser and try.

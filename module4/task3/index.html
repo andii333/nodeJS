@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Transform Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input,
+        button {
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        pre {
+            background: #f0f0f0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>CSV Transform Test</h1>
+
+    <div class="form-group">
+        <label for="rowLimit">Row Limit:</label>
+        <input type="number" id="rowLimit" min="1" value="100">
+    </div>
+
+    <div class="form-group">
+        <button onclick="fetchJsonData()">Fetch JSON Data</button>
+        <button onclick="fetchNdjsonData()">Fetch NDJSON Data</button>
+    </div>
+
+    <h2>JSON Data</h2>
+    <pre id="jsonData"></pre>
+
+    <h2>NDJSON Data</h2>
+    <pre id="ndjsonData"></pre>
+
+    <script>
+        const fetchJsonData = async () => {
+            const rowLimit = document.getElementById('rowLimit').value;
+            try {
+                const response = await fetch('http://localhost:4000/transform/json?rows=' + rowLimit, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const jsonData = await response.json();
+                document.getElementById('jsonData').textContent = JSON.stringify(jsonData, null, 2);
+            } catch (error) {
+                console.error('Error fetching JSON data:', error);
+                document.getElementById('jsonData').textContent = 'Error fetching JSON data.';
+            }
+        };
+
+        const fetchNdjsonData = async () => {
+            const rowLimit = document.getElementById('rowLimit').value;
+            try {
+                const response = await fetch('http://localhost:4000/transform/ndjson?rows=' + rowLimit, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let ndjson = '';
+                let ndjsonText = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    ndjson += decoder.decode(value);
+                    const lines = ndjson.split('\n').filter(Boolean);
+                    lines.forEach(line => {
+                        ndjsonText += line + '\n'; // Collect NDJSON lines for display
+                    });
+                    ndjson = ''; // Reset for next chunk
+                }
+
+                document.getElementById('ndjsonData').textContent = ndjsonText;
+            } catch (error) {
+                console.error('Error fetching NDJSON data:', error);
+                document.getElementById('ndjsonData').textContent = 'Error fetching NDJSON data.';
+            }
+        };
+    </script>
+</body>
+
+</html>
