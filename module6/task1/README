@@ -1,0 +1,13 @@
+Task
+
+Init new TS project.
+
+1. Create tsconfig.json with 'compilerOptions', 'include' and 'exclude' fields.
+
+2. Create new express project with using TS and tsconfig.json, with one simple endpoint.
+
+3. Compile the project.
+
+4. Run the server, send a request to the endpoint, get an answer.
+
+To see result you need to text in command line  -  " npm run task1 "
