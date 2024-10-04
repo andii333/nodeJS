@@ -33,7 +33,7 @@ function showNewData(tag, nicknames) {
     nicknames.splice(nicknames.indexOf(nickname), 1);
   }
   if (nicknames.length) {
-    tag.append(`typing: ${nicknames}`);
+    tag.append(`Online: ${nicknames}`);
     tag.classList.remove("hide");
   } else {
     tag.className = "hide";
