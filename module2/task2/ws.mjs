@@ -19,6 +19,14 @@ form.addEventListener("submit", function (e) {
     socket.emit("stop typing", { channel, nickname });
     inputMessage.value = "";
   }
+  const liTag = document.createElement("li");
+  liTag.append(
+    `nickname: ${nickname} | date: ${new Date().toLocaleDateString()} | message: ${
+      inputMessage.value
+    }`
+  );
+  messages.appendChild(liTag);
+  window.scrollTo(0, document.body.scrollHeight);
 });
 inputMessage.addEventListener("input", function () {
   if (inputMessage.value) {
