@@ -9,6 +9,14 @@ const nickname = url.searchParams.get("name");
 const channel = url.searchParams.get("channel");
 form.addEventListener("submit", function (e) {
   e.preventDefault();
+  const liTag = document.createElement("li");
+  liTag.append(
+    `nickname: ${nickname} | date: ${new Date().toLocaleDateString()} | message: ${
+      inputMessage.value
+    }`
+  );
+  messages.appendChild(liTag);
+  window.scrollTo(0, document.body.scrollHeight);
   if (inputMessage.value && inputMessage.value.length <= 30) {
     socket.emit("chat message", {
       channel: channel,
@@ -19,14 +27,6 @@ form.addEventListener("submit", function (e) {
     socket.emit("stop typing", { channel, nickname });
     inputMessage.value = "";
   }
-  const liTag = document.createElement("li");
-  liTag.append(
-    `nickname: ${nickname} | date: ${new Date().toLocaleDateString()} | message: ${
-      inputMessage.value
-    }`
-  );
-  messages.appendChild(liTag);
-  window.scrollTo(0, document.body.scrollHeight);
 });
 inputMessage.addEventListener("input", function () {
   if (inputMessage.value) {
@@ -41,7 +41,9 @@ function showNewData(tag, nicknames) {
     nicknames.splice(nicknames.indexOf(nickname), 1);
   }
   if (nicknames.length) {
-    tag.append(`Online: ${nicknames}`);
+    tag === online
+      ? tag.append(`Online: ${nicknames}`)
+      : tag.append(`Typing: ${nicknames}`);
     tag.classList.remove("hide");
   } else {
     tag.className = "hide";
