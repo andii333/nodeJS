@@ -8,8 +8,7 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
-app.post("/", (req, res) => {
-  console.log("req", req.body);
+app.post("/", validateOrder, (req, res) => {
   res
     .status(200)
     .json({ message: "Order received successfully", order: req.body });
