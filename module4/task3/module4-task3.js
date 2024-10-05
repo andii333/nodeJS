@@ -18,10 +18,11 @@ const limitRows = (rows, limit) => {
   return rows;
 };
 
-app.post("/transform/json", async (req, res) => {
-  const rowLimit = parseInt(req.query.rows)+1 || null;
+app.get("/transform/json", async (req, res) => {
+  const rowLimit = parseInt(req.query.rows) + 1 || null;
 
   res.setHeader("Content-Type", "application/json");
+  res.setHeader("Content-Disposition", "attachment; filename=data.json");
 
   let rows = [];
 
@@ -42,7 +43,7 @@ app.post("/transform/json", async (req, res) => {
       })
       .on("end", () => {
         rows = limitRows(rows, rowLimit);
-        res.json(rows);
+        res.end(JSON.stringify(rows));
       })
       .on("error", (err) => {
         res.status(500).json({ error: "Error processing CSV data" });
@@ -52,10 +53,11 @@ app.post("/transform/json", async (req, res) => {
   }
 });
 
-app.post("/transform/ndjson", async (req, res) => {
-  const rowLimit = parseInt(req.query.rows)+1 || null;
+app.get("/transform/ndjson", async (req, res) => {
+  const rowLimit = parseInt(req.query.rows) + 1 || null;
 
   res.setHeader("Content-Type", "application/x-ndjson");
+  res.setHeader("Content-Disposition", "attachment; filename=data.ndjson");
 
   let rowCount = 0;
 
