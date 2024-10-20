@@ -26,3 +26,10 @@ Requirements:
 
 To run nest you need to text in command line  -  " npm run start "
 To run tests you need to text in command line  -  " npm run test "
+To check functionality in postman send POST request to http://localhost:3000/users
+{
+    "username":"jasdjs",
+    "email": "asdas@das.com",
+    "password":"123asds",
+    "dateOfBirth": "02,02,2006"
+}

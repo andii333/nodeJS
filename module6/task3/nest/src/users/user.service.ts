@@ -3,8 +3,13 @@ import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UserService {
+  users: string[] = [];
   async createUser(createUserDto: CreateUserDto) {
-    // Логіка збереження користувача
-    return { message: 'User created successfully', user: createUserDto };
+    if (this.users.includes(createUserDto.username))
+      return { message: `User with ${createUserDto.username} exists` };
+    else {
+      this.users.push(createUserDto.username);
+      return { message: 'User created successfully', user: createUserDto };
+    }
   }
 }
