@@ -16,7 +16,7 @@ const QR_CODE_SIZE = parseInt(process.env.QR_CODE_SIZE || "500", 10);
 
 // Хелпер для генерації QR-коду у форматі PNG
 const generateQRCode = async (id: string): Promise<Buffer> => {
- return await QRCode.toBuffer(id, { scale: QR_CODE_SIZE / 100 });
+ return await QRCode.toBuffer(id, { width: QR_CODE_SIZE });
 };
 
 // Хелпер для створення ZIP-архіву і стріму його у відповідь

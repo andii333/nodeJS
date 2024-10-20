@@ -22,10 +22,9 @@ const app = (0, express_1.default)();
 const port = 3000;
 // Отримуємо кількість продуктів і розмір QR-коду з оточення
 const PRODUCT_AMOUNT = parseInt(process.env.PRODUCT_AMOUNT || "100", 10);
-const QR_CODE_SIZE = parseInt(process.env.QR_CODE_SIZE || "500", 10);
 // Хелпер для генерації QR-коду у форматі PNG
 const generateQRCode = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield qrcode_1.default.toBuffer(id, { scale: QR_CODE_SIZE / 100 });
+    return yield qrcode_1.default.toBuffer(id, { width: 500 });
 });
 // Хелпер для створення ZIP-архіву і стріму його у відповідь
 const streamZipWithQRCodes = (res, productAmount) => __awaiter(void 0, void 0, void 0, function* () {
